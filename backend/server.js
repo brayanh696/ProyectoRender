@@ -1,12 +1,14 @@
-import express from 'express';
-import cors from 'cors';
+import React from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet
+} from 'react-native';
 
-const app = express();
+export default function App() {
 
-app.use(cors());
-app.use(express.json());
-
-const tareas = [
+  const tareas = [
     { id: '1', todo: 'Hacer examen' },
     { id: '2', todo: 'Hacer tarea' },
     { id: '3', todo: 'Estudiar Node.js' },
@@ -23,18 +25,52 @@ const tareas = [
     { id: '14', todo: 'Jugar Basquetbol' },
     { id: '15', todo: 'Salir a correr' },
     { id: '16', todo: 'Dormir' }
-];
+  ];
 
-app.get("/", (req, res) => {
-    res.send("Servidor funcionando");
-});
+  return (
+    <View style={styles.container}>
 
-app.get("/tareas", (req, res) => {
-    res.json(tareas);
-});
+      <Text style={styles.titulo}>
+        Lista de Tareas
+      </Text>
 
-const PORT = process.env.PORT || 3000;
+      <FlatList
+        data={tareas}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.item}>
+            <Text style={styles.texto}>
+              {item.todo}
+            </Text>
+          </View>
+        )}
+      />
 
-app.listen(PORT, () => {
-    console.log(`Servidor corriendo en puerto ${PORT}`);
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    marginTop: 50
+  },
+
+  titulo: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20
+  },
+
+  item: {
+    backgroundColor: '#ddd',
+    padding: 15,
+    marginBottom: 10,
+    borderRadius: 10
+  },
+
+  texto: {
+    fontSize: 18
+  }
 });

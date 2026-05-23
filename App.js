@@ -96,4 +96,8 @@ const styles = StyleSheet.create({
     fontSize: 18
   }
 
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> f89911d19f92af504bb66ec60c3fa93bedfda457

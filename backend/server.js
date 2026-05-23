@@ -1,76 +1,40 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet
-} from 'react-native';
+const express = require('express');
+const cors = require('cors');
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-export default function App() {
+app.use(cors());
+app.use(express.json());
 
-  const tareas = [
-    { id: '1', todo: 'Hacer examen' },
-    { id: '2', todo: 'Hacer tarea' },
-    { id: '3', todo: 'Estudiar Node.js' },
-    { id: '4', todo: 'Aprender React Native' },
-    { id: '5', todo: 'Aprender JavaScript' },
-    { id: '6', todo: 'Trabajar' },
-    { id: '7', todo: 'Hacer ejercicio' },
-    { id: '8', todo: 'Ir de vacaciones' },
-    { id: '9', todo: 'Comprar despensa' },
-    { id: '10', todo: 'Jugar Videojuegos' },
-    { id: '11', todo: 'Practicar el piano' },
-    { id: '12', todo: 'Planchar mi ropa' },
-    { id: '13', todo: 'Bolear mis zapatos' },
-    { id: '14', todo: 'Jugar Basquetbol' },
-    { id: '15', todo: 'Salir a correr' },
-    { id: '16', todo: 'Dormir' }
-  ];
+const tareas = [
+  { id: '1', todo: 'Hacer examen' },
+  { id: '2', todo: 'Hacer tarea' },
+  { id: '3', todo: 'Estudiar Node.js' },
+  { id: '4', todo: 'Aprender React Native' },
+  { id: '5', todo: 'Aprender JavaScript' },
+  { id: '6', todo: 'Trabajar' },
+  { id: '7', todo: 'Hacer ejercicio' },
+  { id: '8', todo: 'Ir de vacaciones' },
+  { id: '9', todo: 'Comprar despensa' },
+  { id: '10', todo: 'Jugar Videojuegos' },
+  { id: '11', todo: 'Practicar el piano' },
+  { id: '12', todo: 'Planchar mi ropa' },
+  { id: '13', todo: 'Bolear mis zapatos' },
+  { id: '14', todo: 'Jugar Basquetbol' },
+  { id: '15', todo: 'Salir a correr' },
+  { id: '16', todo: 'Dormir' }
+];
 
-  return (
-    <View style={styles.container}>
+// Ruta para obtener todas las tareas
+app.get('/api/tareas', (req, res) => {
+  res.json(tareas);
+});
 
-      <Text style={styles.titulo}>
-        Lista de Tareas
-      </Text>
+// Ruta de bienvenida
+app.get('/', (req, res) => {
+  res.send('API de Lista de Tareas funcionando');
+});
 
-      <FlatList
-        data={tareas}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.item}>
-            <Text style={styles.texto}>
-              {item.todo}
-            </Text>
-          </View>
-        )}
-      />
-
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    marginTop: 50
-  },
-
-  titulo: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20
-  },
-
-  item: {
-    backgroundColor: '#ddd',
-    padding: 15,
-    marginBottom: 10,
-    borderRadius: 10
-  },
-
-  texto: {
-    fontSize: 18
-  }
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en puerto ${PORT}`);
 });

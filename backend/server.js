@@ -1,40 +1,31 @@
-const express = require('express');
-const cors = require('cors');
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
-app.use(express.json());
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const tareas = [
-  { id: '1', todo: 'Hacer examen' },
-  { id: '2', todo: 'Hacer tarea' },
-  { id: '3', todo: 'Estudiar Node.js' },
-  { id: '4', todo: 'Aprender React Native' },
-  { id: '5', todo: 'Aprender JavaScript' },
-  { id: '6', todo: 'Trabajar' },
-  { id: '7', todo: 'Hacer ejercicio' },
-  { id: '8', todo: 'Ir de vacaciones' },
-  { id: '9', todo: 'Comprar despensa' },
-  { id: '10', todo: 'Jugar Videojuegos' },
-  { id: '11', todo: 'Practicar el piano' },
-  { id: '12', todo: 'Planchar mi ropa' },
-  { id: '13', todo: 'Bolear mis zapatos' },
-  { id: '14', todo: 'Jugar Basquetbol' },
-  { id: '15', todo: 'Salir a correr' },
-  { id: '16', todo: 'Dormir' }
+app.use(express.static('public'));
+
+const todos = [
+    { id: 1, texto: 'Comprar leche' },
+    { id: 2, texto: 'Hacer tarea' },
+    { id: 3, texto: 'Subir proyecto a Render' }
 ];
 
-// Ruta para obtener todas las tareas
-app.get('/api/tareas', (req, res) => {
-  res.json(tareas);
+// Endpoint API
+app.get('/todos', (req, res) => {
+    res.json(todos);
 });
 
-// Ruta de bienvenida
+// Página principal
 app.get('/', (req, res) => {
-  res.send('API de Lista de Tareas funcionando');
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en puerto ${PORT}`);
+    console.log(`Servidor corriendo en puerto ${PORT}`);
 });
